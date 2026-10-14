@@ -65,7 +65,6 @@ app.put("/productos/:id", (req, res) => {
   });
 });
 
-// 4. Eliminar un producto (DELETE)
 app.delete("/productos/:id", (req, res) => {
   const id = req.params.id;
   const sql = "DELETE FROM productos WHERE id = ?";
@@ -79,7 +78,49 @@ app.delete("/productos/:id", (req, res) => {
   });
 });
 
-// Iniciar servidor en el puerto 3000
+
+app.post("/contactos", (req, res) => {
+  const { nombre, asunto, correo, mensaje } = req.body;
+
+  const sql = "INSERT INTO contactos (nombre, asunto, correo, mensaje) VALUES (?, ?, ?, ?)";
+  const valores = [nombre, asunto, correo, mensaje];
+
+  conexion.query(sql, valores, (error, resultado) => {
+    if (error) {
+      console.error("Error al guardar contacto:", error);
+      return res.status(500).json({ mensaje: "Error al guardar el mensaje" });
+    }
+    res.status(201).json({ mensaje: "Mensaje enviado correctamente" });
+  });
+});
+
+
+app.get("/contactos", (req, res) => {
+  const sql = "SELECT * FROM contactos ORDER BY fecha DESC"; 
+
+  conexion.query(sql, (error, resultados) => {
+    if (error) {
+      console.error("Error al consultar contactos:", error);
+      return res.status(500).json({ mensaje: "Error al consultar los mensajes" });
+    }
+    res.json(resultados);
+  });
+});
+
+
+app.delete("/contactos/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM contactos WHERE id = ?";
+
+  conexion.query(sql, [id], (error, resultado) => {
+    if (error) {
+      console.error("Error al eliminar contacto:", error);
+      return res.status(500).json({ mensaje: "Error al eliminar el mensaje" });
+    }
+    res.json({ mensaje: "Mensaje eliminado correctamente" });
+  });
+});
+
 app.listen(3000, () => {
   console.log(" Servidor ejecutándose en http://localhost:3000");
 });

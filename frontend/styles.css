@@ -1,3 +1,18 @@
+/* ===== Variables de color (cambia aquí la paleta completa) ===== */
+:root {
+    --fondo: #f3f7f5;
+    --superficie: #ffffff;
+    --texto: #1f2d2a;
+    --texto-suave: #6b7c77;
+    --borde: #dbe5e1;
+    --primario: #0d9488;
+    --primario-oscuro: #0f766e;
+    --primario-claro: #ccfbf1;
+    --oscuro: #12302c;
+    --peligro: #dc2626;
+    --peligro-claro: #fee2e2;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,8 +21,8 @@
 
 body {
     font-family: 'Poppins', Arial, sans-serif;
-    background-color: #f1f5f9;
-    color: #1e293b;
+    background-color: var(--fondo);
+    color: var(--texto);
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
@@ -21,10 +36,10 @@ body {
     padding: 0 20px;
 }
 
-/* --- Barra de Navegación (Navbar) --- */
+/* ===== Navbar ===== */
 .navbar {
-    background-color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background-color: var(--superficie);
+    border-bottom: 1px solid var(--borde);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -41,30 +56,33 @@ body {
     font-size: 1.3rem;
     font-weight: 700;
     text-decoration: none;
-    color: #1e293b;
+    color: var(--texto);
 }
 
 .logo strong {
-    color: #2563eb;
+    color: var(--primario);
 }
 
 .nav-links {
     display: flex;
-    gap: 20px;
+    gap: 8px;
 }
 
 .nav-links a {
     text-decoration: none;
-    color: #64748b;
+    color: var(--texto-suave);
     font-weight: 500;
-    transition: color 0.2s;
+    padding: 6px 14px;
+    border-radius: 999px;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .nav-links a:hover {
-    color: #2563eb;
+    background-color: var(--primario-claro);
+    color: var(--primario-oscuro);
 }
 
-/* --- Contenido Principal --- */
+/* ===== Contenido principal ===== */
 main {
     flex: 1;
     padding: 40px 20px;
@@ -77,52 +95,48 @@ main {
 
 .encabezado-principal h1 {
     font-size: 2rem;
-    color: #0f172a;
+    color: var(--oscuro);
 }
 
 .encabezado-principal p {
-    color: #64748b;
-    font-size: 1rem;
+    color: var(--texto-suave);
 }
 
-/* --- Layout del Panel (Formulario + Lista) --- */
+/* ===== Layout: formulario + lista ===== */
 .panel-tienda {
     display: grid;
-    grid-template-columns: 360px 1fr; /* izquierda: formulario | derecha: productos */
+    grid-template-columns: 360px 1fr;
     gap: 25px;
     align-items: start;
     margin-bottom: 35px;
 }
 
-/* CAMBIO: formulario siempre a la izquierda */
 .panel-tienda > .tarjeta:has(form) {
     grid-column: 1;
     grid-row: 1;
 }
 
-/* CAMBIO: lista de productos siempre a la derecha */
 .panel-tienda > .tarjeta:has(.lista-productos) {
     grid-column: 2;
     grid-row: 1;
 }
 
-/* Tarjeta contenedora blanca */
 .tarjeta {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background-color: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 26px;
 }
 
 .tarjeta h2 {
-    font-size: 1.25rem;
-    color: #1e293b;
-    margin-bottom: 18px;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 8px;
+    font-size: 1.2rem;
+    color: var(--oscuro);
+    margin-bottom: 20px;
+    padding-left: 12px;
+    border-left: 4px solid var(--primario);
 }
 
-/* --- Formulario --- */
+/* ===== Formulario ===== */
 form {
     display: flex;
     flex-direction: column;
@@ -136,36 +150,44 @@ form {
 }
 
 label {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: #475569;
+    color: var(--texto);
 }
 
 input,
 textarea {
     font-family: inherit;
     font-size: 0.95rem;
-    padding: 10px 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    color: var(--texto);
+    background-color: var(--fondo);
+    padding: 10px 14px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
 input:focus,
 textarea:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background-color: var(--superficie);
+    border-color: var(--primario);
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
 }
 
-/* Botones */
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ===== Botones ===== */
 .btn {
     padding: 12px;
     font-family: inherit;
     font-size: 0.95rem;
     font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
 }
@@ -181,35 +203,25 @@ textarea:focus {
 
 .btn-guardar {
     flex: 1;
-    background-color: #2563eb;
+    background-color: var(--primario);
     color: #ffffff;
 }
 
 .btn-guardar:hover {
-    background-color: #1d4ed8;
+    background-color: var(--primario-oscuro);
 }
 
 .btn-cancelar {
-    background-color: #e2e8f0;
-    color: #475569;
+    background-color: var(--borde);
+    color: var(--texto);
+    padding: 12px 18px;
 }
 
 .btn-cancelar:hover {
-    background-color: #cbd5e1;
+    background-color: #c5d3ce;
 }
 
-.btn-contacto {
-    background-color: #0f172a;
-    color: #ffffff;
-    align-self: flex-start;
-    padding: 10px 24px;
-}
-
-.btn-contacto:hover {
-    background-color: #334155;
-}
-
-/* --- Tarjetas de Producto --- */
+/* ===== Tarjetas de producto / mensaje ===== */
 .lista-productos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -217,29 +229,35 @@ textarea:focus {
 }
 
 .producto {
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    background-color: var(--fondo);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
     padding: 16px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 12px;
+    transition: border-color 0.2s;
+}
+
+.producto:hover {
+    border-color: var(--primario);
 }
 
 .producto h3 {
     font-size: 1.05rem;
-    color: #0f172a;
+    color: var(--oscuro);
 }
 
 .producto p {
     font-size: 0.9rem;
-    color: #64748b;
+    color: var(--texto-suave);
+    overflow-wrap: anywhere;
 }
 
 .producto-precio {
     font-weight: 700;
-    color: #2563eb;
+    color: var(--primario-oscuro) !important;
     font-size: 1.1rem !important;
 }
 
@@ -251,74 +269,61 @@ textarea:focus {
 .acciones button {
     flex: 1;
     padding: 8px;
+    font-family: inherit;
     font-size: 0.85rem;
     font-weight: 600;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
 .btn-editar {
-    background-color: #e2e8f0;
-    color: #334155;
+    background-color: var(--primario-claro);
+    color: var(--primario-oscuro);
 }
 
 .btn-editar:hover {
-    background-color: #cbd5e1;
+    background-color: #99f6e4;
 }
 
 .btn-eliminar {
-    background-color: #fee2e2;
-    color: #dc2626;
+    background-color: var(--peligro-claro);
+    color: var(--peligro);
 }
 
 .btn-eliminar:hover {
     background-color: #fca5a5;
 }
 
-/* --- Sección Contacto --- */
-.seccion-contacto {
-    margin-top: 10px;
-}
-
-.subtitulo-contacto {
-    color: #64748b;
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-}
-
-.fila-contacto {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-/* --- Pie de Página (Footer) --- */
+/* ===== Footer ===== */
 .footer {
-    background-color: #0f172a;
-    color: #94a3b8;
+    background-color: var(--oscuro);
+    color: #9fb8b2;
     padding: 20px 0;
     margin-top: auto;
     text-align: center;
     font-size: 0.9rem;
 }
 
-/* --- Responsive --- */
+/* ===== Accesibilidad: foco visible en botones ===== */
+.btn:focus-visible,
+.acciones button:focus-visible,
+.nav-links a:focus-visible {
+    outline: 3px solid var(--primario);
+    outline-offset: 2px;
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
     .panel-tienda {
         grid-template-columns: 1fr;
     }
 
-    /* CAMBIO: en móvil se apilan (formulario arriba, productos abajo) */
     .panel-tienda > .tarjeta:has(form),
     .panel-tienda > .tarjeta:has(.lista-productos) {
         grid-column: 1;
         grid-row: auto;
-    }
-
-    .fila-contacto {
-        grid-template-columns: 1fr;
     }
 
     .nav-links {

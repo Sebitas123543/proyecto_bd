@@ -111,7 +111,6 @@ if (formulario) {
   });
 }
 
-// 4. Eliminar un producto (DELETE)
 async function eliminarProducto(id) {
   const confirmar = confirm("¿Deseas eliminar este producto de la base de datos?");
   if (!confirmar) return;
@@ -121,25 +120,93 @@ async function eliminarProducto(id) {
       method: "DELETE",
     });
 
-    // Si estábamos editando ese mismo producto, cancelamos la edición
     if (productoId.value == id) {
       cancelarEdicion();
     }
 
-    cargarProductos(); // Refrescar la lista en pantalla
+    cargarProductos(); 
   } catch (error) {
     console.error("Error al eliminar producto:", error);
   }
 }
 
-// 5. Formulario de contacto (demostrativo en contacto.html)
 if (formContacto) {
-  formContacto.addEventListener("submit", (e) => {
+  formContacto.addEventListener("submit", async (e) => {
     e.preventDefault();
-    alert("¡Mensaje de contacto enviado con éxito!");
-    formContacto.reset();
+
+    const nombre = document.getElementById("nombreContacto").value;
+    const asunto = document.getElementById("asuntoContacto").value;
+    const correo = document.getElementById("correoContacto").value;
+    const mensaje = document.getElementById("mensajeContacto").value;
+
+    try {
+      await fetch(`${API_URL}/contactos`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre, asunto, correo, mensaje }),
+      });
+
+      formContacto.reset();
+      cargarMensajes(); 
+    } catch (error) {
+      console.error("Error al enviar mensaje:", error);
+    }
   });
 }
 
-// Llamado inicial al cargar la página
-cargarProductos();
+async function cargarMensajes() {
+  const listaMensajes = document.getElementById("listaMensajes");
+  if (!listaMensajes) return; 
+
+  try {
+    const respuesta = await fetch(`${API_URL}/contactos`);
+    const mensajes = await respuesta.json();
+
+    listaMensajes.innerHTML = "";
+
+    if (mensajes.length === 0) {
+      listaMensajes.innerHTML = "<p style='color: #64748b;'>No hay mensajes recibidos.</p>";
+      return;
+    }
+
+    mensajes.forEach((msg) => {
+      const elemento = document.createElement("div");
+      elemento.classList.add("producto");
+
+      const fechaObj = new Date(msg.fecha);
+      const fechaFormateada = fechaObj.toLocaleString();
+
+      elemento.innerHTML = `
+        <div>
+          <h3>${msg.asunto}</h3>
+          <p><strong>De:</strong> ${msg.nombre} (${msg.correo})</p>
+          <p>${msg.mensaje}</p>
+          <p style="font-size: 0.8rem; color: #94a3b8;">Recibido: ${fechaFormateada}</p>
+        </div>
+        <div class="acciones">
+          <button class="btn-eliminar" onclick="eliminarMensaje(${msg.id})">Eliminar</button>
+        </div>
+      `;
+
+      listaMensajes.appendChild(elemento);
+    });
+  } catch (error) {
+    console.error("Error al cargar mensajes:", error);
+  }
+}
+
+async function eliminarMensaje(id) {
+  const confirmar = confirm("¿Deseas eliminar este mensaje?");
+  if (!confirmar) return;
+
+  try {
+    await fetch(`${API_URL}/contactos/${id}`, {
+      method: "DELETE",
+    });
+    cargarMensajes(); 
+  } catch (error) {
+    console.error("Error al eliminar mensaje:", error);
+  }
+}
+
+cargarMensajes();
