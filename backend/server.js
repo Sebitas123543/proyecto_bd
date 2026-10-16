@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const conexion = require("./db"); // Importamos la conexión creada en db.js
@@ -121,6 +122,8 @@ app.delete("/contactos/:id", (req, res) => {
   });
 });
 
+const PORT = proccess.env.PORT || 3000;
+
 app.listen(3000, () => {
-  console.log(" Servidor ejecutándose en http://localhost:3000");
+  console.log(` Servidor ejecutándose en http://localhost:${PORT}`);
 });

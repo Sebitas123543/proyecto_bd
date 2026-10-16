@@ -88,7 +88,7 @@ if (formulario) {
 
     try {
       if (id) {
-        // MODO ACTUALIZAR (PUT)
+        
         await fetch(`${API_URL}/productos/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
