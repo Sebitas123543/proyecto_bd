@@ -208,5 +208,5 @@ async function eliminarMensaje(id) {
     console.error("Error al eliminar mensaje:", error);
   }
 }
-
+cargarProductos();
 cargarMensajes();
