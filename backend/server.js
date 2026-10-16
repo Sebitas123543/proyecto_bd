@@ -122,7 +122,7 @@ app.delete("/contactos/:id", (req, res) => {
   });
 });
 
-const PORT = proccess.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(3000, () => {
   console.log(` Servidor ejecutándose en http://localhost:${PORT}`);
